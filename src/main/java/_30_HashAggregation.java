@@ -34,15 +34,27 @@ public class Main {
 
         dataset.createOrReplaceTempView("logging_table");
 
+        //-------------SortAggregate------------------
+//        Dataset<Row> results = spark.sql
+//                ("select level, date_format(datetime, 'MMMM') as month, count(1) as total, first(date_format(datetime, 'M')) as monthnum " +
+//                        "from logging_table group by level, month order by cast(monthnum as int), level");
+
+        //-------------HashAggregate------------------
+        //cast monthnum to int
+//        Dataset<Row> results = spark.sql
+//                ("select level, date_format(datetime, 'MMMM') as month, count(1) as total, first(cast(date_format(datetime, 'M') as int)) as monthnum " +
+//                        "from logging_table group by level, month order by monthnum, level");
+
+        //or group by mounthnum
         Dataset<Row> results = spark.sql
-                ("select level, date_format(datetime, 'MMMM') as month, count(1) as total, first(cast(date_format(datetime, 'M') as int)) as monthnum " +
-                        "from logging_table group by level, month order by monthnum, level");
+                ("select level, date_format(datetime, 'MMMM') as month, count(1) as total, date_format(datetime, 'M') as monthnum " +
+                        "from logging_table group by level, month, monthnum order by monthnum, level");
 
         results.show(100);
 
         results.explain();
 
-
+        //-------------HashAggregate------------------
 //        dataset = dataset.select(col("level"),
 //                date_format(col("datetime"), "MMMM").alias("month"),
 //                date_format(col("datetime"), "M").alias("monthnum").cast(DataTypes.IntegerType));
