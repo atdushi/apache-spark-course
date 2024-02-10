@@ -14,6 +14,14 @@ import scala.Tuple2;
 
 import java.util.*;
 
+//C:\javalibs\kafka_2.11-2.0.0\bin\windows
+//zookeeper-server-start.bat ..\..\config\zookeeper.properties
+//kafka-server-start.bat ..\..\config\server.properties
+//kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic viewrecords
+//kafka-topics.bat --list --zookeeper localhost:2181
+//kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic viewrecords
+//kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic viewrecords --from-beginning
+
 public class ViewingFiguresDStreamVersion {
 
     public static void main(String[] args) throws InterruptedException {
